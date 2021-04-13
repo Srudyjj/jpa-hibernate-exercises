@@ -2,6 +2,7 @@ package com.bobocode.dao;
 
 import com.bobocode.model.Company;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 public class CompanyDaoImpl implements CompanyDao {
@@ -13,6 +14,7 @@ public class CompanyDaoImpl implements CompanyDao {
 
     @Override
     public Company findByIdFetchProducts(Long id) {
-        throw new UnsupportedOperationException("I'm still not implemented!");
+        EntityManager emf = entityManagerFactory.createEntityManager();
+        return emf.find(Company.class, id);
     }
 }

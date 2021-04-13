@@ -2,6 +2,7 @@ package com.bobocode.dao;
 
 import com.bobocode.model.Photo;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
@@ -17,7 +18,14 @@ public class PhotoDaoImpl implements PhotoDao {
 
     @Override
     public void save(Photo photo) {
-        throw new UnsupportedOperationException("Just do it!"); // todo
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+            entityManager.persist(photo);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+        }
     }
 
     @Override

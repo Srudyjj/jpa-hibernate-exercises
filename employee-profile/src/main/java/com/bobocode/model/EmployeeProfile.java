@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.Objects;
+
 /**
  * todo:
  * - implement not argument constructor
@@ -20,9 +23,33 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "employee_profile")
 public class EmployeeProfile {
+
+    @Id
     private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @Column(name = "position", nullable = false)
     private String position;
+    @Column(name = "department", nullable = false)
     private String department;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployeeProfile that = (EmployeeProfile) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
